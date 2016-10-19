@@ -80,14 +80,77 @@
 
 <h4 id="内存管理规则">内存管理规则</h4>
 
-<p>内存管理规则，有时也称为所有权原则，帮助你在Objective-C 代码中正确地管理内存。
-  * 你持有使用 allocating 方法 或者copying 创建的对象
-    相关方法有：alloc，allocWithZone：，copy，copyWithZone：，mutableCopy，mutabCopyWithZone：
-  * 对于那些不是自己创建的对象，如果需要保留在内存中供你使用，也可以通过表示所有权来持有
-    相关方法有：retain
-  * 对于那些你持有的对象，你需要在不需要它们的时候释放。
-    相关方法有：release, autorelease<br />
-  * 对于非自己持有的对象，则不能进行释放操作。</p>
+<p>内存管理规则，有时也称为所有权原则，帮助你在Objective-C 代码中正确地管理内存。</p>
+
+<ul>
+<li><p>你持有使用 allocating 方法 或者copying 创建的对象
+相关方法有：alloc，allocWithZone：，copy，copyWithZone：，mutableCopy，mutabCopyWithZone：，new</p>
+
+<pre><code>
+   id object = [[NSObject alloc] init];//自己生成且持有
+</code></pre></li>
+
+<li><p>对于那些不是自己创建的对象，如果需要保留在内存中供你使用，也可以通过表示所有权来持有
+相关方法有：retain</p>
+
+<pre><code>id object = [NSArray array];//自己生成但不持有
+[object retain];//通过retain持有对象
+
+</code></pre></li>
+
+<li><p>对于那些你持有的对象，你需要在不需要它们的时候释放。
+相关方法有：release, autorelease</p>
+
+<pre><code>id object = [[NSObject alloc] init];//自己生成且持有
+[object release];//释放
+
+</code></pre>
+
+<pre><code>id object = [NSArray array];//自己生成但不持有
+[object retain];//通过retain持有对象
+[object release];//释放
+</code></pre></li>
+
+<li><p>对于非自己持有的对象，则不能进行释放操作。</p>
+
+<pre><code> id object = [NSArray array];//自己生成但不持有
+ [object release]; //Error
+</code></pre></li>
+</ul>
+
+<p>如果在程序的其他地方捕获到一个对象，通常该对象的有效作用域就是捕获对象的方法或者函数中。如果在超出对象作用域还想继续持有该对象，我们应当使用 copy 或者 retain 方法来持有它。如果你尝试对一个已经释放的对象进行 release 操作，你的程序将会崩溃。</p>
+
+<h4 id="内存管理方面">内存管理方面</h4>
+
+<p>以下概念对于理解和正确使用内存管理是十分必要的：</p>
+
+<ul>
+<li><p>Autorelease pools. 给对象发送 autorelease 消息，可以推迟该对象的释放时间。如果你想让一个应该被释放的对象在超出其作用域的地方保留下来， 可以autorelease方法。给对象发送 autorelease 消息，是把对象放入一个autorelease pool对象 ( NSAutoreleasePool 实例对象)中,该autorelease pool对象是在程序作用域中随意创建的。当程序执行到作用域外，放入autorelease pool对象中的对象也会被释放。</p></li>
+
+<li><p>Deallocation. 当一个对象的自动引用计数为0，runtime 会在该对象销毁之前发送 delloc 消息给它。每个类需要在 delloc 方法的实现中释放它本身持有的资源，包括它的实例变量。</p>
+
+<p>```
+@interface Person : NSObject
+@property (retain) NSString *firstName;
+@property (retain) NSString *lastName;
+@property (assign, readonly) NSString *fullName;
+@end</p>
+
+<p>@implementation Person
+// &hellip;</p>
+
+<ul>
+<li>(void)dealloc
+[_firstName release];
+[_lastName release];
+[super dealloc];
+}
+@end
+```<br /></li>
+</ul></li>
+
+<li><p>Factory methods. 许多框架类提供了工厂方法，方便我们创建对象。使用工厂方法创建的对象在超出其作用域后会自动失效释放。</p></li>
+</ul>
 
   </div>
   <footer>
