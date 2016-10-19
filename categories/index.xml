@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>一个软件从业者的自我精进</title>
+    <link>https://leoodang.github.io/categories/index.xml</link>
+    <description>Recent content on 一个软件从业者的自我精进</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>memory management of objective c objects</title>
+      <link>https://leoodang.github.io/post/2016/10/memory-management-of-objective-c-objects/</link>
+      <pubDate>Tue, 18 Oct 2016 17:23:48 +0800</pubDate>
+      
+      <guid>https://leoodang.github.io/post/2016/10/memory-management-of-objective-c-objects/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

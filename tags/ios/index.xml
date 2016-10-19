@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>一个软件从业者的自我精进</title>
+    <link>https://leoodang.github.io/tags/ios/index.xml</link>
+    <description>Recent content on 一个软件从业者的自我精进</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/ios/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>objective-C 内存管理 I</title>
+      <link>https://leoodang.github.io/post/2016/10/memory-management-of-objective-c-objects/</link>
+      <pubDate>Tue, 18 Oct 2016 17:23:48 +0800</pubDate>
+      
+      <guid>https://leoodang.github.io/post/2016/10/memory-management-of-objective-c-objects/</guid>
+      <description>内存管理 内存管理是指管理对象的生命周期，并在不需要对象的时候释放它们。管理对象内存是一件和软件性能戚戚相关的事情：如果应用不释放那些无用的对象，就会导致占用的内存不断增加进而影响到性能，甚至崩溃。Apple 公司的Cocoa框架并没有采用垃圾回收机制，而是使用了自动引用计数模型。当你创建或者复制了一个对象，该对象的引用计数加1。如果其他对象持有该对象，引用计数增加（+1）。如果持有者放弃该对象的所有权，该对象的引用计数减少（-1）。当一个对象的引用计数减为零时，该对象被销毁，相应的内存被释放出来。
+为了帮助我们使用内存管理，Objective-C 提供了一系列我们需要遵守的方法和机制。
+内存管理规则 内存管理规则，有时也称为所有权原则，帮助你在Objective-C 代码中正确地管理内存。 * 你持有使用 allocating 方法 或者copying 创建的对象 相关方法有：alloc，allocWithZone：，copy，copyWithZone：，mutableCopy，mutabCopyWithZone： * 对于那些不是自己创建的对象，如果需要保留在内存中供你使用，也可以通过表示所有权来持有 相关方法有：retain * 对于那些你持有的对象，你需要在不需要它们的时候释放。 相关方法有：release, autorelease
+* 对于非自己持有的对象，则不能进行释放操作。</description>
+    </item>
+    
+  </channel>
+</rss>
