@@ -9,6 +9,21 @@
     <atom:link href="/categories/dev/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>objective-C 内存管理 II</title>
+      <link>https://leoodang.github.io/post/2016/10/memory-management-of-objective-c-objects-II/</link>
+      <pubDate>Wed, 19 Oct 2016 15:50:15 +0800</pubDate>
+      
+      <guid>https://leoodang.github.io/post/2016/10/memory-management-of-objective-c-objects-II/</guid>
+      <description>ARC规则 引用计数机制的内存管理模型总结起来就是如下几条原则：
+ 自己生成的对象，自己持有（使用alloc、new、copy开头的方法生成） 非自己生成的对象，自己也能持有（使用retain） 自己持有的对象，在不需要的时候需要释放（release） 非自己持有的对象，无权释放  所有权修饰符 在ARC环境下，Objecti-C 追加了所有权修饰符：
+ __strong修饰符 __weak修饰符 __unsafe_unretained修饰符 __autoreleasing修饰符  __strong修饰符 id类型和对象类型默认的所有权修饰符为__strong修饰符。
+id object = [[NSObject alloc] init];  id __strong object = [[NSObject alloc] init];  以上两段代码在ARC环境下是等同的。那么MRC环境下，以上代码又等同于什么呢？
+//MRC id object = [[NSObject alloc] init]; [object release];  如代码所示，__strong 修饰的object对象在超出其作用域时释放。
+__weak修饰符 仅仅通过__strong修饰符无法解决一些重大问题，其中最严重的就是循环引用的问题。 如果两个对象互相持有，导致彼此不能释放，进而引发内存泄露。所谓内存泄露就是指对象在超出其生命周期后没有正确的释放，继续存在在内存中。 weak与strong相反，提供弱引用，不持有对象,并在对象释放后自动置为nil。参看一下代码：
+id __weak obj = [[NSObject alloc] init]; NSLog(@&amp;quot;%@&amp;quot;,obj);  试想这段代码的输出是什么？我们会得到一个编译警告：Assigning retained object to weak variable; object will be released after assignment。因为对象生成后引用计数为0，随即被释放掉，我们打印出来的是null。 像下面的代码段就没有问题了:</description>
+    </item>
+    
+    <item>
       <title>objective-C 内存管理 I</title>
       <link>https://leoodang.github.io/post/2016/10/memory-management-of-objective-c-objects/</link>
       <pubDate>Tue, 18 Oct 2016 17:23:48 +0800</pubDate>
